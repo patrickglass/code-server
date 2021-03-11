@@ -1,0 +1,31 @@
+name: Docker Image CI
+
+env:
+  code-server-version: '3.9.1'
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Docker Login
+      uses: docker/login-action@v1.8.0
+      with:
+       username: ${{ secrets.DOCKERHUB_USERNAME }}
+       password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build the Docker image and push
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        build-args: |
+          CODE_SERVER_VERSION=${{ code-server-version }}
+        tags: patrickglass/code-server:latest, patrickglass/code-server:${{ code-server-version }}
