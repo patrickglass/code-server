@@ -31,5 +31,5 @@ jobs:
       with:
         push: ${{ github.ref == 'ref/head/main' }}
         build-args: |
-          CODE_SERVER_VERSION=${{ CODE_SEVER_VERSION }}
-        tags: patrickglass/code-server:latest, patrickglass/code-server:${{ CODE_SEVER_VERSION }}
+          CODE_SERVER_VERSION=${{ env.CODE_SEVER_VERSION }}
+        tags: patrickglass/code-server:latest, patrickglass/code-server:${{ env.CODE_SEVER_VERSION }}
