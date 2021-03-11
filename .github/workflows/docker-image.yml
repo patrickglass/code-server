@@ -1,11 +1,15 @@
 name: Docker Image CI
 
 env:
-  code-server-version: '3.9.1'
+  CODE_SEVER_VERSION: '3.9.1'
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
@@ -25,7 +29,7 @@ jobs:
     - name: Build the Docker image and push
       uses: docker/build-push-action@v2
       with:
-        push: true
+        push: ${{ github.ref == 'ref/head/main' }}
         build-args: |
-          CODE_SERVER_VERSION=${{ code-server-version }}
-        tags: patrickglass/code-server:latest, patrickglass/code-server:${{ code-server-version }}
+          CODE_SERVER_VERSION=${{ CODE_SEVER_VERSION }}
+        tags: patrickglass/code-server:latest, patrickglass/code-server:${{ CODE_SEVER_VERSION }}
